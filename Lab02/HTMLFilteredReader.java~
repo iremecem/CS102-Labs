@@ -1,0 +1,63 @@
+import cs1.SimpleURLReader;
+/**
+ * A class, subclass of the MySimpleURLReader class
+ * 
+ * @author Irem Ecem Yelkanat
+ * @version 23/10/18
+ */ 
+public class HTMLFilteredReader extends MySimpleURLReader 
+{
+   /** Constructs a new HTMLFilteredReader object with the given parameters
+     * @param urlString the url
+     */ 
+   public HTMLFilteredReader (String urlString) 
+   {
+      super (urlString);
+   }
+   
+   /** Return only the text, without the html
+     * @return text
+     */ 
+   public String getPageContents() 
+   {
+      // Variables
+      int first;
+      int last;
+      String withoutHTML;
+      
+      // Initialize the variables
+      first = 0; 
+      last = 0;
+      withoutHTML = "";
+      
+      for (int i = 0; i < getUnfilteredPageContents().length(); i++) 
+      {
+         if (getUnfilteredPageContents().charAt(i) == '<') 
+         {
+            first = i;
+         }
+         if (getUnfilteredPageContents().charAt(i) == '>') 
+         {
+            last = i;
+         }
+         
+         if (first > last) 
+         {
+            withoutHTML += getUnfilteredPageContents().substring(last + 1, first);
+            
+            first = 0;
+            last = 0;
+         }
+      }
+      return withoutHTML;
+   }
+      
+      /** Returns the original page complete with html codes
+        * @return the original page complete with html codes
+        */ 
+      public String getUnfilteredPageContents() 
+      {
+         return super.getPageContents();
+      }
+      
+   }

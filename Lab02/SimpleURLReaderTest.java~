@@ -1,0 +1,28 @@
+import cs1.SimpleURLReader;
+/**
+ * A test program for SimpleURLReader
+ * 
+ * @author Irem Ecem Yelkanat
+ * @version 23/10/18
+ */ 
+public class SimpleURLReaderTest
+{
+   public static void main(String[] args)
+   {
+      // Variables
+      SimpleURLReader reader;
+      
+      // Initialize the variables
+      reader = new SimpleURLReader("http://www.cs.bilkent.edu.tr/~adayanik/courses/cs102/docs/housman.txt");
+      
+      // Print the url
+      //System.out.println(reader.getURL() + "\n");
+      
+      // Print the contents of the url
+      System.out.println(reader.getPageContents() + "\n");
+      
+      // Print the number of lines the url contains
+      System.out.println(reader.getLineCount()); 
+   }
+   
+}
