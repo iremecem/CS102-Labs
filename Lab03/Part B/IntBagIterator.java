@@ -1,0 +1,68 @@
+import java.util.Iterator;
+
+/* A class implementing IntIterator
+ * 
+ * @author Irem Ecem Yelkanat
+ * @version 6/11/18
+ */
+public class IntBagIterator implements IntIterator 
+{
+   // Properties
+   IntBag bag;
+   int index;
+   
+   /** Constructs a IntBagIterator object with the given parameters
+     * @param bag an instance of IntBag
+     */ 
+   public IntBagIterator(IntBag bag) 
+   {
+      this.bag = bag;
+      index = 0;
+   }
+   
+   /** Returns true if the iteration has more elements
+     * @return true if the iteration has more elements
+     */ 
+   public boolean hasNext() 
+   {
+      if (index < bag.size())
+      {
+         return true;
+      }
+      else
+      {
+         return false;
+      }
+   }
+   
+   /** Returns the next element in the iteration
+     * @return the next element in the iteration
+     */ 
+   public int nextInt() 
+   {
+      // Variables
+      int value;
+      
+      // Initialize the variables
+      value = new Integer(bag.getValue(index));
+      index++;
+      
+      return value;
+   }
+   
+   /** Returns the next element in the iteration
+     * @return the next element in the iteration
+     */ 
+   public Object next() 
+   {
+      // Variables
+      Integer value;
+      
+      // Initialize the variables
+      value = new Integer(bag.getValue(index));
+      index++;
+      
+      return value;
+   }
+   
+}

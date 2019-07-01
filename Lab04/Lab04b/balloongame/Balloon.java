@@ -1,0 +1,44 @@
+import shapes.Drawable;
+import shapes.Circle;
+import java.awt.*;
+/** Balloon class, subclass of the Circle class
+  * 
+  * @author Irem Ecem Yelkanat
+  * @version 13/11/18
+  */ 
+public class Balloon extends Circle implements Drawable
+{
+   /** Constructs a Balloon object with a default radius 25
+     * @param xCoordinate the x coordinate of the balloon
+     * @param yCoordinate the y coordinate of the balloon
+     */ 
+   public Balloon(int xCoordinate, int yCoordinate)
+   {
+      super(25);
+      setLocation (xCoordinate, yCoordinate);
+   }
+   
+   /**
+    * Makes the balloon grow by a factor of 2 and clears it if radius gets more than 100
+    */
+   public void grow()
+   {
+      // Increase the radius
+      setRadius(getRadius() + 1);
+      
+      // If reached the maximum size
+      if (getRadius() > 100)
+      {
+         setSelected(true);
+         setRadius(0);
+      }
+   }
+   
+   /** Draws graphics
+     * @param g the graphics that will be drawn
+     */ 
+   public void draw (Graphics g)
+   {
+      g.drawOval (getX(), getY(), getRadius(), getRadius());
+   } 
+}

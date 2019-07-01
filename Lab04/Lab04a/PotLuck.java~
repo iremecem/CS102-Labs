@@ -1,0 +1,115 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+/** A potluck game
+  *
+  * @author Irem Ecem Yelkanat
+  * @version 13/11/2018
+  */
+public class PotLuck extends JFrame 
+{   
+   // Properties
+   private static JButton[] buttons;
+   private JLabel topLabel;
+   private int clickCount;
+   private static int luckyCount;
+   private JPanel buttonsPanel; 
+   private JPanel topPanel;
+   
+   /** Construcks a new potluck
+     */ 
+   public PotLuck() 
+   {
+      // Initialize the variabşes
+      clickCount = 0;
+      luckyCount = ((int) (Math.random() * 25)) + 1;
+      setLayout(new BorderLayout());
+      topLabel = new JLabel(clickCount + " tries made!");
+      buttonsPanel = new JPanel();
+      topPanel = new JPanel();
+      
+      // Set Button layout
+      buttonsPanel.setLayout(new GridLayout(5, 5));
+      
+      // Add buttons
+      addButtons();
+      
+      // Set Frame Layout
+      topPanel.setLayout(new BorderLayout());
+      topPanel.add(topLabel, BorderLayout.WEST);
+      add(buttonsPanel, BorderLayout.CENTER);
+      add(topPanel, BorderLayout.NORTH);
+      setBounds(600,300,500,400);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setVisible(true);
+   }
+   
+   /** Add buttons to array
+     */ 
+   public void addButtons()
+   {
+      buttons = new JButton[25];
+      
+      for (int i = 0; i < 25; i++) 
+      {
+         buttons[i] = new JButton("Click!");
+         buttonsPanel.add(buttons[i]);
+         buttons[i].addActionListener(new PotLuckListener());
+      }
+   }
+   
+   /** A listener class, subclassing ActionListener
+     */ 
+   public class PotLuckListener implements ActionListener 
+   {
+      public void actionPerformed(ActionEvent e) 
+      {
+         // If the player found the correct button
+         if (e.getSource() == buttons[luckyCount]) 
+         {
+            clickCount++;
+            new WinScreen();
+         } 
+         else 
+         {
+            // If the button has selected before
+            if(((JButton)e.getSource()).getBackground() != Color.RED)
+            {
+               ((JButton)e.getSource()).setBackground(Color.RED);
+               clickCount++;
+               topLabel.setText(clickCount + " TRIES HAVE BEEN MADE!");
+            }
+            else
+            {
+               topLabel.setText("THIS BUTTON HAS BEEN ALREADY CLICKED!");
+            }
+         }
+      } 
+   }
+   
+   /** A class, subclassing JFrame
+     */ 
+   public class WinScreen extends JFrame 
+   {
+      // Properties
+      JLabel win;
+      
+      /** Constructs a WinScreen object
+     */ 
+      public WinScreen() 
+      {
+         setLayout(new FlowLayout());
+         win = new JLabel(" YOU HAVE FOUND IT IN " + clickCount + " TRIES!");
+         add(win);
+         setBounds(650, 450, 250, 150);
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         setVisible(true);
+      }
+   }
+   
+   public static void main(String[] args) 
+   { 
+      // Start a game
+      new PotLuck(); 
+   } 
+}

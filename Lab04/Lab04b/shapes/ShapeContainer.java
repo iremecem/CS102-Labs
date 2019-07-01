@@ -1,0 +1,200 @@
+package shapes;
+import java.util.Iterator;
+import java.util.*;
+/** Holds a set of shapes
+  * 
+  * @author Irem Ecem Yelkanat
+  * @version 13/11/18
+  */ 
+public class ShapeContainer implements Iterable
+{
+   // Properties
+   ArrayList<Selectable> shapes;
+   
+   /** Constructs a ShapeContainer object
+     */ 
+   public ShapeContainer()
+   {
+      shapes = new ArrayList<Selectable>();
+   }
+   
+   /** Adds a shape to ShapeContainer
+     * @param shape the shape that will be added
+     */
+   public void add (Selectable shape)
+   {
+      shapes.add(shape);
+   }
+   
+   /** Gets the area of all the shapes
+     * @return total area
+     */
+   public double getArea()
+   {
+      // Variables
+      double totalArea;
+      
+      // Initialize the variables
+      totalArea = 0;
+      
+      // Calculate total area
+      for (int i = 0; i < shapes.size(); i++)
+      {
+         totalArea += ((Shape)shapes.get(i)).getArea();
+      }
+      return totalArea;  
+   }
+   
+   /** Removes all selected shapes from the set of shapes
+     */ 
+   public void removeAllSelected()
+   {
+      for (int i = 0; i < shapes.size(); i++) 
+      {
+         if ((shapes.get(i)).getSelected()) 
+         {
+            shapes.remove(i);
+            i--;
+         }
+      }  
+   }
+   
+   /** Finds the first Shape that contains a given x, y point and, 
+     * afterwards, toggle its selected state
+     * @param x the x location
+     * @param y the y location
+     * @return the first shape it contains
+     */ 
+   public Selectable findFirstShape (int x, int y)
+   {
+      for (int i = 0; i < shapes.size(); i++) 
+      {
+         if (shapes.get(i).contains(x, y) != null) 
+         {
+            if (shapes.get(i).getSelected())
+            {
+               shapes.get(i).setSelected(false);
+               return shapes.get(i);
+            }
+            else
+            {
+               shapes.get(i).setSelected(true);
+               return shapes.get(i);
+            }
+         } 
+      }
+      return null;
+   }
+   
+   /** Returns the number of shapes in the  container
+     * @return the number of shapes in the  container
+     */ 
+   public int size()
+   {
+      return shapes.size();
+   }
+   
+   /** returns the number of shapes found at the point x,y 
+     * and sets the selected property of those shapes to true
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return the number of shapes found at the point x,y
+     */ 
+   public int selectAllAt (int x, int y)
+   {
+      // Variables
+      int count;
+      
+      // Initialize the variables
+      count = 0;
+      
+      // Find the num of shapes
+      for (int i = 0; i < shapes.size(); i++)
+      {
+         if (shapes.get(i).contains(x, y) != null)
+         {
+            shapes.get(i).setSelected(true);
+            count++;
+         }
+      }
+      return  count;
+   }
+   
+   /** Returns Iterator interface
+     * @return Iterator interface
+     */
+   public Iterator iterator()
+   {
+      Iterator shapeIterate = new ShapeContainerIterator (this);
+      return shapeIterate;
+   }
+   
+   /** Returns string representations of all the shapes
+     * @return string representations of all the shapes
+     */
+   public String toString()
+   {
+      // Variables
+      String shapeInfo;
+      
+      // Initialize the variables
+      shapeInfo = "";
+      
+      // Find shape info
+      for (int i = 0; i < shapes.size(); i++)
+      {
+         shapeInfo += shapes.get(i).toString() + "\n";
+      }
+      
+      return "***The shapes in the shape container*** \n" + shapeInfo;
+   }
+   
+   /** A ShapeContainerIterator class, implementing Iterator
+     */ 
+   public class ShapeContainerIterator implements Iterator 
+   {
+      // Properties
+      ShapeContainer container;
+      int index;
+      
+      /** Constructs a ShapeContainerIterator object with the given parameters
+        * @param container an instance of ShapeContainer
+        */ 
+      public ShapeContainerIterator(ShapeContainer container) 
+      {
+         this.container = container;
+         index = 0;
+      }
+      
+      /** Returns true if the iteration has more elements
+        * @return true if the iteration has more elements
+        */ 
+      public boolean hasNext() 
+      {
+         if (index < container.shapes.size())
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+      
+      /** Returns the next element in the iteration
+        * @return the next element in the iteration
+        */ 
+      public Object next() 
+      {
+         // Variables
+         Object obj;
+         
+         // Initialize the variables
+         obj = container.shapes.get(index);
+         index++;
+         
+         return obj;
+      } 
+      
+   }
+}
